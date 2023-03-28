@@ -1,6 +1,9 @@
+import 'package:content_checker/pages/homepage.dart';
+import 'package:content_checker/pages/image_checker.dart';
+import 'package:content_checker/pages/text_checker.dart';
 import 'package:flutter/material.dart';
 
-void main(List<String> args) {
+void main() {
   runApp(MyApp());
 }
 
@@ -9,25 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Content Checker"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-              width: 400,
-              child: ElevatedButton(
-                  onPressed: () {}, child: Text("Image Checker"))),
-          SizedBox(height: 20),
-          SizedBox(
-              width: 400,
-              child:
-                  ElevatedButton(onPressed: () {}, child: Text("Text Checker")))
-        ],
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+      routes: {
+        "image": (context) => ImageChecker(),
+        "text": (context) => TextChecker(),
+      },
     );
   }
 }
