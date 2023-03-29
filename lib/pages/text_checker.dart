@@ -18,12 +18,13 @@ class _TextCheckerState extends State<TextChecker> {
     final url = Uri.parse(
         "https://neutrinoapi-bad-word-filter.p.rapidapi.com/bad-word-filter");
     final headers = {
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'application/json',
       'X-RapidAPI-Key': '6c0c776a66msh536572f5dfb2d98p1d0b06jsn8b89eeb288c1',
       'X-RapidAPI-Host': 'neutrinoapi-bad-word-filter.p.rapidapi.com'
     };
     final body = json.encode({"content": _controller.text});
     final response = await http.post(url, headers: headers, body: body);
+    debugPrint(response.body);
     if (response.statusCode == 200) {
       final jsonresponse = jsonDecode(response.body);
       final bool iscussed = jsonresponse["is-bad"];
@@ -45,10 +46,13 @@ class _TextCheckerState extends State<TextChecker> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
-            onChanged: (value) {
-              _controller.text = value;
-            },
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextFormField(
+              onChanged: (value) {
+                _controller.text = value;
+              },
+            ),
           ),
           ElevatedButton(
               onPressed: () {
