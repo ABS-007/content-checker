@@ -21,18 +21,20 @@ class _TextCheckerState extends State<TextChecker> {
       'content-type': 'application/json',
       'X-RapidAPI-Key': '6c0c776a66msh536572f5dfb2d98p1d0b06jsn8b89eeb288c1'
     };
-    var body = json.encode({
-      "text": _controller.text,
-      "maskCharacter": "x",
-      "language": "en"
-    });
+    var body = json.encode(
+        {"text": _controller.text, "maskCharacter": "x", "language": "en"});
     var response = await http.post(uri, headers: headers, body: body);
+
     if (response.statusCode == 200) {
-      debugPrint(response.body.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("This text contains cuss words.")));
+      var result = json.decode(response.body);
+      if (result['profanities'].isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("This text contains cuss words.")));
+      }
     } else {
-      debugPrint("Error Code ${response.statusCode}");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text("invalid Text. Error status code: ${response.statusCode}")));
     }
   }
 
